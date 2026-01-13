@@ -1,12 +1,27 @@
-from google import genai
-from PIL import Image
-import io
+import json
 import os
+from typing import Any, Dict
+from litellm import completion
 
-gemini_api_key = 'HARDCODED_GEMINI_API_KEY_HERE'
-gemini_client = genai.Client(api_key=gemini_api_key)
+# You can replace these with other models as needed but this is the one we suggest for this lab.
+MODEL = "groq/llama-3.3-70b-versatile"
 
-def get_llm_response(image_data: bytes) -> str:
-    image = Image.open(io.BytesIO(image_data))
-    # implement the call to the Gemini API here
-    # docs: https://ai.google.dev/gemini-api/docs/text-generation
+api_key = "hardcoded GROQ_API_KEY HERE"
+
+
+def get_itinerary(destination: str) -> Dict[str, Any]:
+    """
+    Returns a JSON-like dict with keys:
+      - destination
+      - price_range
+      - ideal_visit_times
+      - top_attractions
+    """
+    # implement litellm call here to generate a structured travel itinerary for the given destination
+
+    # See https://docs.litellm.ai/docs/ for reference.
+
+    data = ...
+    
+
+    return data

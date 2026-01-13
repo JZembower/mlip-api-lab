@@ -1,34 +1,46 @@
 {
 	"info": {
-		"_postman_id": "8ffc3089-7647-4113-bbb9-c0491a2ddd9f",
+		"_postman_id": "409d1aa2-5c7f-4809-b253-e619b765978d",
 		"name": "mlip-api-lab-collection",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "Analyze Image POST Request",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "file",
-					"file": {
-						"src": ""
+			"name": "Travel Itinerary Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
 					}
-				},
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
 				"url": {
-					"raw": "127.0.0.1:3000/api/v1/analyze",
+					"raw": "http://127.0.0.1:8000/api/v1/itinerary?destination=Venice",
+					"protocol": "http",
 					"host": [
 						"127",
 						"0",
 						"0",
 						"1"
 					],
-					"port": "3000",
+					"port": "8000",
 					"path": [
 						"api",
 						"v1",
-						"analyze"
+						"itinerary"
+					],
+					"query": [
+						{
+							"key": "destination",
+							"value": "<insert_destination_here>"
+						}
 					]
 				}
 			},

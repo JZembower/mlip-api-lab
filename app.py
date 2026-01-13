@@ -1,27 +1,34 @@
 from flask import Flask, request, jsonify, render_template
-from analyze import get_llm_response
+from analyze import get_itinerary
 
-app = Flask(__name__, template_folder='templates')
+app = Flask(__name__)
 
 @app.route("/")
-def home():
-    return render_template('index.html')
+def index():
+    return render_template("index.html")
 
+@app.get("/api/v1/itinerary")
+def itinerary():
+    destination = request.args.get("destination", "").strip()
 
-@app.route("/api/v1/analyze", methods=['POST'])
-def analyze():
+    # Basic request validation
+    if not destination:
+        return jsonify({"error": "Missing required query parameter: destination"}), 400
+    if len(destination) > 120:
+        return jsonify({"error": "destination is too long (max 120 chars)"}), 400
+
     try:
-        image_data = request.get_data(cache=False)
-        llm_response = get_llm_response(image_data)
-        response_data = {
-            "text": llm_response
-        }
-        return jsonify(response_data), 200
+        result = get_itinerary(destination)
+        return jsonify(result), 200
+    except ValueError as e:
+        # Client-side input errors
+        return jsonify({"error": str(e)}), 400
     except Exception as e:
-        return jsonify({'error': f'Error retrieving response from LLM. Error: {e}'}), 500
+        # Upstream/model errors
+        return jsonify({"error": f"Failed to generate itinerary: {e}"}), 502
 
 
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=3000, debug=True)
+    app.run(host="0.0.0.0", port=8000, debug=True)
